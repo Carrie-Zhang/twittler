@@ -1,0 +1,9 @@
+div {
+	background-color: #87CEFA;
+	margin: 10px;
+	box-shadow: 2px 3px 3px #888888;
+	width: 500px;
+	padding: 10px;
+	border-radius: 2px;
+	font-family: calibri;
+}
