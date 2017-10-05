@@ -9,31 +9,57 @@
   <body>
     <script>
 
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+    var $body = $('body');
+    $body.html('');
+    var index = streams.home.length - 1;
+    var retainIndex = index;
+    var newTweetInterval;
+    var init = false;
 
-        var index = streams.home.length - 1;
-        var retainIndex = index;
+    var newTweets = function() {
+      newTweetInterval = setInterval(function() {
+        for(var i = retainIndex + 1; i < streams.home.length - 1; i++) {
+            var tweet = streams.home[i];
+            var $tweet = $("<div class='div-" + tweet.user + "'></div>");
+            $tweet.html("<strong class='" + tweet.user + "'>@" + tweet.user + '</strong>: ' + tweet.message + '<br />' + tweet.created_at);
+            $tweet.appendTo($body);
+            retainIndex = i;
+          }
+        }, 1000);
+    }
+
+      $(document).ready(function(){
+
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          // $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + ' ' + tweet.created_at);
+          var $tweet = $("<div class='div-" + tweet.user + "'></div>");
+          $tweet.html("<strong class='" + tweet.user + "'>@" + tweet.user + '</strong>: ' + tweet.message + '<br />' + tweet.created_at);
           $tweet.appendTo($body);
           index -= 1;
         }
 
-        setInterval(function() {
-          for(var i = retainIndex + 1; i < streams.home.length - 1; i++) {
-            var tweet = streams.home[i];
-            var $tweet = $('<div></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message + ' ' + tweet.created_at);
-            $tweet.appendTo($body);
-            retainIndex = i;
-          }
-        }, 1000)
+        newTweets();
 
+      }).on('click', '.shawndrost', function() {
+        $('.div-sharksforcheap').remove();
+        $('.div-mracus').remove();
+        $('.div-douglascalhoun').remove();
+        clearInterval(newTweetInterval);
+      }).on('click', '.sharksforcheap', function() {
+        $('.div-shawndrost').remove();
+        $('.div-mracus').remove();
+        $('.div-douglascalhoun').remove();
+        clearInterval(newTweetInterval);
+      }).on('click', '.mracus', function() {
+        $('.div-shawndrost').remove();
+        $('.div-sharksforcheap').remove();
+        $('.div-douglascalhoun').remove();
+        clearInterval(newTweetInterval);
+      }).on('click', '.douglascalhoun', function() {
+        $('.div-shawndrost').remove();
+        $('.div-sharksforcheap').remove();
+        $('.div-dmracus').remove();
+        clearInterval(newTweetInterval);
       });
 
     </script>
