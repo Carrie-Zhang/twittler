@@ -12,6 +12,7 @@
         $body.html('');
 
         var index = streams.home.length - 1;
+        var retainIndex = index;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
@@ -20,6 +21,16 @@
           $tweet.appendTo($body);
           index -= 1;
         }
+
+        setInterval(function() {
+          for(var i = retainIndex + 1; i < streams.home.length - 1; i++) {
+            var tweet = streams.home[i];
+            var $tweet = $('<div></div>');
+            $tweet.text('@' + tweet.user + ': ' + tweet.message + ' ' + tweet.created_at);
+            $tweet.appendTo($body);
+            retainIndex = i;
+          }
+        }, 1000)
 
       });
 
